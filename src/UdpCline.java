@@ -5,7 +5,10 @@ import java.net.*;
 public class UdpCline {
     InetAddress ip;
     int port;
-    DatagramSocket socket;
+    DatagramSocket socket =new DatagramSocket();
+
+    public UdpCline() throws SocketException {
+    }
 
     public void send(String ip, int port, String message) {
         try {
@@ -59,7 +62,12 @@ public class UdpCline {
         int port = Integer.parseInt(args[1]);
 
         // create client object
-        UdpCline client = new UdpCline();
+        UdpCline client = null;
+        try {
+            client = new UdpCline();
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
         while (true) {
             // read input from user
             String input = System.console().readLine("Enter message to send: ");
