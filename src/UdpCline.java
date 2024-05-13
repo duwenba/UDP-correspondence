@@ -44,10 +44,23 @@ public class UdpCline {
         }
         return null;
     }
+
     public static void main(String[] args) {
         UdpCline client = new UdpCline();
-        client.send("127.0.0.1", 9876, "Hello, World!");
-        String message = client.receive();
-        System.out.println("Received message: " + message);
+        while (true) {
+            // read input from user
+            String input = System.console().readLine("Enter message to send: ");
+            if (input.equals("exit")) {
+                break;
+            }
+            // send message to server
+            client.send("10.174.117.103", 9876, input);
+            // receive message from server
+            String message = client.receive();
+            // print message to console
+            System.out.println("Received message: " + message + "\n");
+        }
+        // close socket
+        client.socket.close();
     }
 }
