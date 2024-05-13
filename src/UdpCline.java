@@ -34,7 +34,7 @@ public class UdpCline {
             byte[] buffer = new byte[1024];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             // 超时重发
-            this.socket.setSoTimeout(10000);
+            this.socket.setSoTimeout(1000);
             this.socket.receive(packet);
 
 //          this.socket.receive(packet);
@@ -42,7 +42,7 @@ public class UdpCline {
             this.socket.close();
             return message;
         } catch (SocketTimeoutException e) {
-            System.out.println("No message received in 10 seconds.");
+            System.out.println("No message received in 1000 milliseconds.");
             return null;
         } catch (IOException e) {
             throw new RuntimeException(e);
