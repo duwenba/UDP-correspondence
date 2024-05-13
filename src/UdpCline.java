@@ -11,7 +11,7 @@ public class UdpCline {
         try {
             this.ip = InetAddress.getByName(ip);
             this.port = port;
-            this.socket = new DatagramSocket(4567);
+            this.socket = new DatagramSocket();
             byte[] data = message.getBytes();
             DatagramPacket packet = new DatagramPacket(data, data.length, this.ip, this.port);
             this.socket.send(packet);
