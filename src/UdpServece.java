@@ -4,9 +4,10 @@ import java.time.format.DateTimeFormatter;
 
 public class UdpServece {
     public static void main(String[] args) {
-        try {
+        try  {
             DatagramSocket serverSocket = new DatagramSocket(9876);
             byte[] receiveData = new byte[1024];
+            System.out.println("Server is running on " + InetAddress.getLocalHost().getHostAddress() + ":" + serverSocket.getLocalPort());
             while (true) {
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                 serverSocket.receive(receivePacket);

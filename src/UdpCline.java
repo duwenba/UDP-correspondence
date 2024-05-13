@@ -46,6 +46,15 @@ public class UdpCline {
     }
 
     public static void main(String[] args) {
+        // read ip and port from command line arguments
+        if (args.length < 2) {
+            System.out.println("Usage: java UdpCline <ip> <port>");
+            return;
+        }
+        String ip = args[0];
+        int port = Integer.parseInt(args[1]);
+
+        // create client object
         UdpCline client = new UdpCline();
         while (true) {
             // read input from user
@@ -54,7 +63,7 @@ public class UdpCline {
                 break;
             }
             // send message to server
-            client.send("10.174.117.103", 9876, input);
+            client.send(ip, port, input);
             // receive message from server
             String message = client.receive();
             // print message to console
