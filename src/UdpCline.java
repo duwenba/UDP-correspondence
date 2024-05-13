@@ -33,16 +33,20 @@ public class UdpCline {
             System.out.println("Waiting for message on port 4567...");
             byte[] buffer = new byte[1024];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+            // 超时重发
+            this.socket.setSoTimeout(10000);
             this.socket.receive(packet);
+
+//          this.socket.receive(packet);
             String message = new String(packet.getData(), 0, packet.getLength());
             this.socket.close();
             return message;
-        } catch (SocketException e) {
-            e.printStackTrace();
+        } catch (SocketTimeoutException e) {
+            System.out.println("No message received in 10 seconds.");
+            return null;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public static void main(String[] args) {
@@ -66,6 +70,10 @@ public class UdpCline {
             client.send(ip, port, input);
             // receive message from server
             String message = client.receive();
+            // 超时重发
+            if (message == null) {
+                continue;
+            }
             // print message to console
             System.out.println("Received message: " + message + "\n");
         }
